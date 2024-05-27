@@ -1,39 +1,67 @@
 const booksList = document.querySelector(".books-list");
+const searchInput = document.getElementById("filter-book");
+const URL = "http://localhost:3000/BOOKS";
 
-const getBooks = () => {
-  fetch("http://localhost:3000/BOOKS")
-    .then((res) => res.json())
-    .then((data) => showBooks(data));
-};
+async function fetchBooks() {
+  try {
+    fetch(URL)
+      .then((res) => res.json())
+      .then((data) => {
+        showBooksOnDisplay(data);
+      });
+  } catch (error) {
+    throw new Error(error);
+  }
+}
 
-const showBooks = (data) => {
+function showBooksOnDisplay(data) {
   for (let i = 0; i < data.length; i++) {
     const { title, genre, author, image } = data[i];
-    const h3 = document.createElement("h3");
-    const genreParagraph = document.createElement("p");
-    const authorParagraph = document.createElement("p");
-    const img = document.createElement("img");
+    const bookTitle = document.createElement("h2");
+    const bookGenre = document.createElement("p");
+    const bookAuthor = document.createElement("h3");
+    const bookImage = document.createElement("img");
 
-    const div = document.createElement("div");
-    div.setAttribute("class", "book-card");
+    const bookCard = document.createElement("div");
+    bookCard.setAttribute("class", "book-card");
 
-    h3.setAttribute("class", "book-title");
-    h3.append(title);
-    genreParagraph.setAttribute("class", "book-genre");
-    genreParagraph.append(genre);
-    authorParagraph.setAttribute("class", "book-author");
-    authorParagraph.append(author);
-    img.setAttribute("src", `./images/${image}`);
-    img.setAttribute("alt", title);
-    img.append(image);
+    bookTitle.setAttribute("class", "book-title");
+    bookTitle.append(title);
+    bookGenre.setAttribute("class", "book-genre");
+    bookGenre.append(genre);
+    bookAuthor.setAttribute("class", "book-author");
+    bookAuthor.append(author);
+    bookImage.setAttribute("src", `./images/${image}`);
+    bookImage.setAttribute("alt", title);
+    bookImage.append(image);
 
-    div.appendChild(h3);
-    div.appendChild(genreParagraph);
-    div.appendChild(authorParagraph);
-    div.appendChild(img);
+    bookCard.appendChild(bookTitle);
+    bookCard.appendChild(bookImage);
+    bookCard.appendChild(bookGenre);
+    bookCard.appendChild(bookAuthor);
 
-    booksList.append(div);
+    booksList.append(bookCard);
   }
-};
+}
 
-getBooks();
+function handleSubmit(e) {
+  e.preventDefault();
+  filterBookByName();
+}
+
+function filterBookByName() {
+  const filterValue = searchInput.value.toLowerCase();
+  const bookCards = document.querySelectorAll(".book-card");
+  bookCards.forEach((card) => {
+    const title = card.querySelector(".book-title");
+    if (title.textContent.toLowerCase().includes(filterValue)) {
+      card.style.display = "block";
+    } else {
+      card.style.display = "none";
+    }
+  });
+}
+
+searchInput.addEventListener("input", filterBookByName);
+
+fetchBooks();

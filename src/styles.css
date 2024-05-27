@@ -1,3 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+main {
+  display: grid;
+  place-items: center;
+}
+
 img {
   width: 100px;
+}
+
+#filter-book {
+  margin-top: 50px;
+  width: 250px;
+  padding: 5px;
+}
+
+.books-list {
+  display: grid;
+  grid-template-columns: repeat(4, 200px);
+  margin-top: 100px;
 }
