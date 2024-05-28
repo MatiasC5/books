@@ -9,13 +9,24 @@ config();
 
 const app = express();
 
+const url = process.env.MONGO_URL;
+const dbName = process.env.DB_NAME;
+const port = process.env.PORT || 3000;
+
 app.use(bodyParser.json());
 
 app.use(cors());
 
-mongoose.connect(process.env.MONGO_URL, { dbName: process.env.MONGO_DB_NAME });
+mongoose
+  .connect(url, { dbName })
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((error) => {
+    console.log("Error connecting to MongoDB:", error);
+    process.exit(1);
+  });
 const db = mongoose.connection;
-const port = process.env.PORT || 3000;
 
 app.use("/BOOKS", booksRoutes);
 

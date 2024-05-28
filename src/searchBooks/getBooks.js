@@ -52,11 +52,17 @@ function handleSubmit(e) {
 function filterBookByName() {
   const filterValue = searchInput.value.toLowerCase();
   const bookCards = document.querySelectorAll(".book-card");
+
   bookCards.forEach((card) => {
     const title = card.querySelector(".book-title");
     if (title.textContent.toLowerCase().includes(filterValue)) {
-      card.style.display = "block";
+      card.setAttribute("class", "showBook");
     } else {
+      card.style.display = "none";
+    }
+
+    if (filterValue === "") {
+      searchInput.removeEventListener("input", filterBookByName);
       card.style.display = "none";
     }
   });
