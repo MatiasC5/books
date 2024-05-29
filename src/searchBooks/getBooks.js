@@ -1,6 +1,6 @@
 const booksList = document.querySelector(".books-list");
 const searchInput = document.getElementById("filter-book");
-const URL = "http://localhost:3000/BOOKS";
+const URL = "https://books-production-bda8.up.railway.app/BOOKS";
 
 async function fetchBooks() {
   try {
