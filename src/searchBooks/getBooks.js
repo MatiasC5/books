@@ -60,11 +60,6 @@ function filterBookByName() {
     } else {
       card.style.display = "none";
     }
-
-    if (filterValue === "") {
-      searchInput.removeEventListener("input", filterBookByName);
-      card.style.display = "none";
-    }
   });
 }
 
