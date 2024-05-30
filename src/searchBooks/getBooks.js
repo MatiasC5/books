@@ -46,17 +46,16 @@ function showBooksOnDisplay(data) {
 
 function handleSubmit(e) {
   e.preventDefault();
-  filterBookByName();
 }
 
 function filterBookByName() {
-  const filterValue = searchInput.value.toLowerCase();
+  const currentValue = searchInput.value.toLowerCase();
   const bookCards = document.querySelectorAll(".book-card");
 
   bookCards.forEach((card) => {
     const title = card.querySelector(".book-title");
-    if (title.textContent.toLowerCase().includes(filterValue)) {
-      card.setAttribute("class", "showBook");
+    if (title.textContent.toLowerCase().includes(currentValue)) {
+      card.style.display = "block";
     } else {
       card.style.display = "none";
     }
